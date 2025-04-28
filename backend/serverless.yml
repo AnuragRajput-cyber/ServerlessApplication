@@ -1,0 +1,18 @@
+service: lambda-backend
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  timeout: 30
+
+functions:
+  app:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /api/hello
+          method: get
+
+plugins:
+  - serverless-offline
