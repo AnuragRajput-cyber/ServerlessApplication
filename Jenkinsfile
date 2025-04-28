@@ -24,8 +24,8 @@ pipeline {
             steps {
                 dir('backend') {
                     withAWS(credentials: 'aws-credentials') {
-                        sh 'npm install'
-                        sh 'serverless deploy'
+                        bat 'npm install'
+                        bat 'npx serverless deploy'
                     }
                 }
             }
@@ -34,19 +34,17 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('frontend') {
-                    sh 'npm install'
-                    sh 'npm run build'
+                    bat 'npm install'
+                    bat 'npm run build'
                 }
             }
         }
 
         stage('Upload Frontend to S3') {
             steps {
-                dir('frontend/build') {
+                dir('frontend\\build') { // Windows path ke liye "\\" use kiya
                     withAWS(credentials: 'aws-credentials') {
-                        sh '''
-                        aws s3 sync . s3://my-mern-frontend2/ --delete
-                        '''
+                        bat 'aws s3 sync . s3://my-mern-frontend2/ --delete'
                     }
                 }
             }
