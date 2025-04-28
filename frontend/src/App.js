@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>MERN App on AWS 🚀</h1>
+      <h1>MERN App</h1>
       <h2>(Frontend on S3 + Backend on Lambda)</h2>
 
       <div className="card">
