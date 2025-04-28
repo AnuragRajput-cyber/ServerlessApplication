@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         AWS_DEFAULT_REGION = 'us-east-1'
-        PATH = "${env.PATH}:C:/Program Files/nodejs/"
-        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+        PATH = "${env.PATH};C:/Program Files/nodejs/"   // Use ; instead of : for Windows
+        NPM_CONFIG_CACHE = "${WORKSPACE}\\.npm"         // Windows uses backslash
     }
 
     options {
@@ -22,9 +22,9 @@ pipeline {
             steps {
                 dir('backend') {
                     withAWS(credentials: 'aws-credentials') {
-                        sh '''
-                            mkdir -p ~/.npm
-                            npm install serverless@3
+                        bat '''
+                            if not exist %USERPROFILE%\\.npm mkdir %USERPROFILE%\\.npm
+                            npm install -g serverless@3
                             serverless deploy
                         '''
                     }
@@ -35,7 +35,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('frontend') {
-                    sh '''
+                    bat '''
                         npm install
                         npm run build
                     '''
@@ -46,8 +46,8 @@ pipeline {
         stage('Upload Frontend to S3') {
             steps {
                 withAWS(credentials: 'aws-credentials') {
-                    sh '''
-                        aws s3 sync frontend/build/ s3://my-mern-frontend2/ --delete
+                    bat '''
+                        aws s3 sync build\\ s3://my-mern-frontend2/ --delete
                     '''
                 }
             }
@@ -56,10 +56,10 @@ pipeline {
 
     post {
         success {
-            echo '🎯 Deployment Successful!'
+            echo ' Deployment Successful!'
         }
         failure {
-            echo '💥 Deployment Failed!'
+            echo ' Deployment Failed!'
         }
     }
 }
