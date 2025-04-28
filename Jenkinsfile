@@ -33,15 +33,16 @@ pipeline {
         }
 
         stage('Build Frontend') {
-            steps {
-                dir('frontend') {
-                    bat '''
-                        npm install
-                        npm run build
-                    '''
-                }
-            }
+    steps {
+        dir('frontend') {
+            bat 'npm install'
+            bat 'npm run build'
+            // Verify the build directory exists
+            bat 'dir build'
         }
+    }
+}
+
 
         stage('Upload Frontend to S3') {
             steps {
