@@ -47,7 +47,7 @@ pipeline {
             steps {
                 withAWS(credentials: 'aws-credentials') {
                     bat '''
-                        aws s3 sync build\\ s3://my-mern-frontend2/ --delete
+                        aws s3 sync frontend\\build\\ s3://my-mern-frontend2/ --delete
                     '''
                 }
             }
