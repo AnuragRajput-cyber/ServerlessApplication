@@ -24,8 +24,8 @@ pipeline {
             steps {
                 dir('backend') {
                     withAWS(credentials: 'aws-credentials') {
-                        bat 'npm install'
-                        bat 'npx serverless deploy'
+                        bat 'npm install -g serverless@3'
+                        bat 'serverless deploy'
                     }
                 }
             }
