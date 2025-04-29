@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         AWS_DEFAULT_REGION = 'us-east-1'
-        PATH = "${env.PATH};C:/Program Files/nodejs/"   // Use ; instead of : for Windows
-        NPM_CONFIG_CACHE = "${WORKSPACE}\\.npm"         // Windows uses backslash
+        PATH = "${env.PATH};C:/Program Files/nodejs/"   
+        NPM_CONFIG_CACHE = "${WORKSPACE}\\.npm"         
     }
 
     options {
@@ -37,7 +37,7 @@ pipeline {
         dir('frontend') {
             bat 'npm install'
             bat 'npm run build'
-            // Verify the build directory exists
+            
             bat 'dir build'
         }
     }
