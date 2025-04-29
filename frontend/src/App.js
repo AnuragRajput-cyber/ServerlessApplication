@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Applicatio</h1>
+      <h1>Application uodate try 2</h1>
       <h2>(Frontend on S3 + Backend on Lambda)</h2>
 
       <div className="card">
