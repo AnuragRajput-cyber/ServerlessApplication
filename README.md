@@ -13,7 +13,7 @@ This project demonstrates a **complete CI/CD pipeline** using **Jenkins**, **Git
     <td align="center"><img src="https://cdn.worldvectorlogo.com/logos/aws-2.svg" alt="AWS" width="60"/></td>
     <td align="center"><img src="https://cdn.worldvectorlogo.com/logos/jenkins-1.svg" alt="Jenkins" width="60"/></td>
     <td align="center"><img src="https://cdn.worldvectorlogo.com/logos/github-icon-1.svg" alt="GitHub" width="60"/></td>
-    <td align="center"><img src="https://www.serverless.com/img/logos/serverless-logo.svg" alt="Serverless Framework" width="80"/></td>
+    <td align="center"><img src="https://user-images.githubusercontent.com/2752551/30405068-a7733b34-989e-11e7-8f66-7badaf1373ed.png" alt="Serverless Framework" width="80"/></td>
   </tr>
   <tr>
     <td align="center">Node.js</td>
