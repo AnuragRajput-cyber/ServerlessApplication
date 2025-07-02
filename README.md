@@ -1,18 +1,40 @@
-# Serverless MERN Application Deployment Pipeline
+# 🚀 Serverless MERN Application Deployment Pipeline
 
-This project demonstrates a **complete CI/CD pipeline** using **Jenkins**, **GitHub**, **AWS Lambda**, and **Amazon S3** to deploy a serverless MERN stack application automatically.
+This project demonstrates a **complete CI/CD pipeline** using **Jenkins**, **GitHub**, **AWS Lambda**, and **Amazon S3** to automatically deploy a serverless MERN stack application.
 
 ---
 
 ## 📋 Project Overview
 
-- **Backend**: Node.js serverless functions deployed to AWS Lambda using [Serverless Framework](https://www.serverless.com/).
-- **Frontend**: React application deployed to an S3 bucket as a static website.
-- **CI/CD**: Jenkins Pipeline automates:
-  - Cloning code from GitHub
-  - Installing dependencies
-  - Building and deploying backend and frontend
-  - Uploading frontend build artifacts to S3
+<table>
+  <tr>
+    <td align="center"><img src="https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg" alt="Node.js" width="60"/></td>
+    <td align="center"><img src="https://cdn.worldvectorlogo.com/logos/react-2.svg" alt="React" width="60"/></td>
+    <td align="center"><img src="https://cdn.worldvectorlogo.com/logos/aws-2.svg" alt="AWS" width="60"/></td>
+    <td align="center"><img src="https://cdn.worldvectorlogo.com/logos/jenkins-1.svg" alt="Jenkins" width="60"/></td>
+    <td align="center"><img src="https://cdn.worldvectorlogo.com/logos/github-icon-1.svg" alt="GitHub" width="60"/></td>
+    <td align="center"><img src="https://www.serverless.com/img/logos/serverless-logo.svg" alt="Serverless Framework" width="80"/></td>
+  </tr>
+  <tr>
+    <td align="center">Node.js</td>
+    <td align="center">React</td>
+    <td align="center">AWS</td>
+    <td align="center">Jenkins</td>
+    <td align="center">GitHub</td>
+    <td align="center">Serverless Framework</td>
+  </tr>
+</table>
+
+---
+
+* **Backend**: Node.js serverless functions deployed to **AWS Lambda** using [Serverless Framework](https://www.serverless.com/).
+* **Frontend**: React application deployed to an **S3 bucket** as a static website.
+* **CI/CD Pipeline**: **Jenkins** automates:
+
+  * Cloning code from GitHub
+  * Installing dependencies
+  * Building and deploying backend and frontend
+  * Uploading frontend build artifacts to S3
 
 ---
 
@@ -20,47 +42,59 @@ This project demonstrates a **complete CI/CD pipeline** using **Jenkins**, **Git
 
 Before running the Jenkins pipeline, ensure you have:
 
-1. **AWS CLI Installed and Configured**
-   ```powershell
-   aws configure
-````
+### 1️⃣ AWS CLI Installed and Configured
 
-> Enter your AWS Access Key, Secret Key, and Region.
+```bash
+aws configure
+```
 
-2. **Serverless Framework Installed Globally**
+> Enter your **AWS Access Key**, **Secret Key**, and **Region**.
 
-   ```powershell
-   npm install -g serverless@3
-   ```
+---
 
-3. **Node.js Installed**
+### 2️⃣ Serverless Framework Installed Globally
 
-   * [Download Node.js](https://nodejs.org/)
-   * Verify:
+```bash
+npm install -g serverless@3
+```
 
-     ```powershell
-     node -v
-     npm -v
-     ```
+---
 
-4. **Docker Installed (if needed by Jenkins agents)**
+### 3️⃣ Node.js Installed
 
-   * [Install Docker Desktop](https://www.docker.com/products/docker-desktop)
+[Download Node.js](https://nodejs.org/)
 
-5. **Jenkins Installed**
+Verify installation:
 
-   * [Download Jenkins](https://www.jenkins.io/download/)
-   * Start Jenkins and install recommended plugins.
+```bash
+node -v
+npm -v
+```
 
-6. **Jenkins AWS Credentials**
+---
 
-   * In Jenkins, add credentials:
+### 4️⃣ Docker Installed (if needed by Jenkins agents)
 
-     ```
-     Type: AWS Credentials
-     ID: aws-credentials
-     ```
-   * These credentials will be used by `withAWS(credentials: 'aws-credentials')`.
+[Install Docker Desktop](https://www.docker.com/products/docker-desktop)
+
+---
+
+### 5️⃣ Jenkins Installed
+
+[Download Jenkins](https://www.jenkins.io/download/)
+
+Start Jenkins and install **recommended plugins**.
+
+---
+
+### 6️⃣ Jenkins AWS Credentials
+
+In Jenkins, add credentials:
+
+* **Type:** AWS Credentials
+* **ID:** `aws-credentials`
+
+These credentials will be used by `withAWS(credentials: 'aws-credentials')`.
 
 ---
 
@@ -82,29 +116,44 @@ ServerlessApplication/
 
 ## 🚀 Jenkins Pipeline Explained
 
-The pipeline defined in `Jenkinsfile` consists of **four main stages**:
+The pipeline in the `Jenkinsfile` consists of **four main stages**:
 
-1. **Checkout Code**
+### 1️⃣ Checkout Code
 
-   * Pulls the latest code from the `main` branch on GitHub.
+✅ Pulls the latest code from the `main` branch on GitHub.
 
-2. **Install and Deploy Backend**
+---
 
-   * Installs Serverless Framework.
-   * Deploys backend Lambda functions using `serverless deploy`.
+### 2️⃣ Install and Deploy Backend
 
-3. **Build Frontend**
+✅ Installs Serverless Framework
+✅ Deploys backend Lambda functions using:
 
-   * Installs npm dependencies.
-   * Builds the React application.
+```bash
+serverless deploy
+```
 
-4. **Upload Frontend to S3**
+---
 
-   * Syncs the `frontend/build` directory to the target S3 bucket:
+### 3️⃣ Build Frontend
 
-     ```
-     s3://my-mern-frontend2
-     ```
+✅ Installs npm dependencies
+✅ Builds the React application:
+
+```bash
+npm install
+npm run build
+```
+
+---
+
+### 4️⃣ Upload Frontend to S3
+
+✅ Syncs the `frontend/build` directory to your S3 bucket:
+
+```bash
+aws s3 sync ./frontend/build s3://my-mern-frontend2
+```
 
 ---
 
@@ -122,96 +171,121 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') { ... }
-        stage('Deploy Backend') { ... }
-        stage('Build Frontend') { ... }
-        stage('Upload to S3') { ... }
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-repo-url.git'
+            }
+        }
+        stage('Deploy Backend') {
+            steps {
+                sh 'npm install -g serverless@3'
+                dir('backend') {
+                    withAWS(credentials: 'aws-credentials') {
+                        sh 'serverless deploy'
+                    }
+                }
+            }
+        }
+        stage('Build Frontend') {
+            steps {
+                dir('frontend') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+        stage('Upload to S3') {
+            steps {
+                withAWS(credentials: 'aws-credentials') {
+                    sh 'aws s3 sync ./frontend/build s3://my-mern-frontend2'
+                }
+            }
+        }
     }
 }
 ```
-
-> **Note:** All backend deployments use Serverless Framework with your configured AWS credentials.
-
----
-
-## 🧪 How to Run the Pipeline
-
-1. Start Jenkins and ensure Docker and Node.js are installed.
-2. Create a **Pipeline job** in Jenkins.
-3. Configure the GitHub repository URL.
-4. Paste the `Jenkinsfile` contents into the pipeline script.
-5. Add AWS credentials in Jenkins credentials store.
-6. Click **Build Now**.
-7. Check the console output for deployment progress.
 
 ---
 
 ## ✅ S3 Bucket Configuration
 
-To host the frontend, ensure the S3 bucket is set to serve a static website:
+To host the frontend, configure your bucket:
 
-1. **Enable Static Website Hosting:**
+1️⃣ **Enable Static Website Hosting**
 
-   * In S3 console, select your bucket.
-   * Enable static website hosting.
-   * Set `index.html` as the default document.
-
-2. **Make Objects Public (if required):**
-
-   * Configure bucket policy to allow public read access.
+* Go to the **S3 Console**.
+* Select your bucket.
+* Enable **Static website hosting**.
+* Set `index.html` as the default document.
 
 ---
 
-## 📝 Troubleshooting
+2️⃣ **Make Objects Public (if required)**
 
-* **Serverless not recognized in Jenkins**
+Example bucket policy:
 
-  * Ensure Node.js is installed and in PATH:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::my-mern-frontend2/*"
+    }
+  ]
+}
+```
 
-    ```
-    C:/Program Files/nodejs/
-    ```
-  * Install serverless globally in the Jenkins step:
+---
 
-    ```
-    npm install -g serverless@3
-    ```
+## 🧪 Troubleshooting
 
-* **AWS CLI not found**
+### ❌ Serverless Not Recognized in Jenkins
 
-  * Verify `aws` is in system PATH.
-  * Test by running:
+* Ensure Node.js is in the `PATH`.
+* Install Serverless globally in the Jenkins step:
 
-    ```
-    aws --version
-    ```
+  ```bash
+  npm install -g serverless@3
+  ```
 
-* **S3 Permissions**
+---
 
-  * Ensure the IAM user has:
+### ❌ AWS CLI Not Found
 
-    ```
-    s3:PutObject
-    s3:ListBucket
-    s3:DeleteObject
-    ```
+* Verify AWS CLI is installed and accessible:
 
-    permissions for your bucket.
+  ```bash
+  aws --version
+  ```
+
+---
+
+### ❌ S3 Permissions
+
+Ensure your IAM user has the following permissions:
+
+* `s3:PutObject`
+* `s3:ListBucket`
+* `s3:DeleteObject`
 
 ---
 
 ## 🎯 Future Improvements
 
-* Add automated testing stages.
-* Set up notifications (Slack, Email) for deployments.
-* Use versioned S3 deployments.
-* Configure CloudFront CDN for frontend.
+✅ Add automated testing stages
+✅ Set up notifications (Slack, Email)
+✅ Use versioned S3 deployments
+✅ Configure CloudFront CDN for frontend
 
 ---
 
 ## 🙏 Credits
 
-Built by [Anurag Rajput](https://github.com/AnuragRajput-cyber).
+Built by [Anurag Rajput](https://github.com/AnuragRajput-cyber)
 Using Jenkins, AWS Lambda, S3, Serverless Framework, and React.
 
 ---
@@ -219,4 +293,5 @@ Using Jenkins, AWS Lambda, S3, Serverless Framework, and React.
 ## 📄 License
 
 This project is licensed under the MIT License.
+
 
