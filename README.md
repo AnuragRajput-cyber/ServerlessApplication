@@ -1,17 +1,3 @@
-Absolutely—here’s a **professional, clear, and complete `README.md`** you can drop right into your project root folder.
-This README:
-
-✅ Explains the architecture (Jenkins + GitHub + Lambda + S3)
-✅ Lists prerequisites with example commands
-✅ Describes the CI/CD Pipeline
-✅ Adds tips and troubleshooting notes
-✅ Is structured and polished
-
-Below is the **full Markdown content** you can copy as `README.md`:
-
----
-
-````markdown
 # Serverless MERN Application Deployment Pipeline
 
 This project demonstrates a **complete CI/CD pipeline** using **Jenkins**, **GitHub**, **AWS Lambda**, and **Amazon S3** to deploy a serverless MERN stack application automatically.
